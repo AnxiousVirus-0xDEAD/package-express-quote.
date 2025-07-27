@@ -1,43 +1,72 @@
-# Welcome message for the Package Express application.
-print("Welcome to Package Express. Please follow the instructions below.")
+using System;
 
-# Get package weight from the user.
-try:
-    weight = float(input("Please enter the package weight: "))
-except ValueError:
-    # Handle cases where the user doesn't enter a number.
-    print("Invalid input. Please enter a numeric value for weight.")
-    exit()
+public class PackageExpress
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Welcome to Package Express. Please follow the instructions below.");
 
-# Check if the package is too heavy.
-if weight > 50:
-    print("Package too heavy to be shipped via Package Express. Have a good day.")
-    exit()
+        // Get package weight from the user.
+        double weight;
+        Console.Write("Please enter the package weight: ");
+        while (!double.TryParse(Console.ReadLine(), out weight))
+        {
+            Console.WriteLine("Invalid input. Please enter a numeric value for weight.");
+            Console.Write("Please enter the package weight: ");
+        }
 
-# Get package dimensions (width, height, length) from the user.
-try:
-    width = float(input("Please enter the package width: "))
-    height = float(input("Please enter the package height: "))
-    length = float(input("Please enter the package length: "))
-except ValueError:
-    # Ensure dimensions are numeric.
-    print("Invalid input. Please enter numeric values for dimensions.")
-    exit()
+        // Check if the package is too heavy.
+        if (weight > 50)
+        {
+            Console.WriteLine("Package too heavy to be shipped via Package Express. Have a good day.");
+            Console.ReadLine(); // Keep console open
+            return;
+        }
 
-# Calculate total dimensions to check if the package is too big.
-total_dimensions = width + height + length
+        // Get package dimensions (width, height, length) from the user.
+        double width, height, length;
 
-if total_dimensions > 50:
-    print("Package too big to be shipped via Package Express.")
-    exit()
+        Console.Write("Please enter the package width: ");
+        while (!double.TryParse(Console.ReadLine(), out width))
+        {
+            Console.WriteLine("Invalid input. Please enter a numeric value for width.");
+            Console.Write("Please enter the package width: ");
+        }
 
-# Calculate the shipping quote based on dimensions and weight.
-# Formula: (width * height * length * weight) / 100
-dimensions_product = width * height * length
-product_with_weight = dimensions_product * weight
-quote = product_with_weight / 100
+        Console.Write("Please enter the package height: ");
+        while (!double.TryParse(Console.ReadLine(), out height))
+        {
+            Console.WriteLine("Invalid input. Please enter a numeric value for height.");
+            Console.Write("Please enter the package height: ");
+        }
 
-# Display the final shipping quote, formatted as currency.
-print(f"Your estimated total for shipping this package is: ${quote:.2f}")
+        Console.Write("Please enter the package length: ");
+        while (!double.TryParse(Console.ReadLine(), out length))
+        {
+            Console.WriteLine("Invalid input. Please enter a numeric value for length.");
+            Console.Write("Please enter the package length: ");
+        }
 
-print("Thank you!")
+        // Calculate total dimensions to check if the package is too big.
+        double totalDimensions = width + height + length;
+
+        if (totalDimensions > 50)
+        {
+            Console.WriteLine("Package too big to be shipped via Package Express.");
+            Console.ReadLine(); // Keep console open
+            return;
+        }
+
+        // Calculate the shipping quote based on dimensions and weight.
+        // Formula: (width * height * length * weight) / 100
+        double dimensionsProduct = width * height * length;
+        double productWithWeight = dimensionsProduct * weight;
+        double quote = productWithWeight / 100;
+
+        // Display the final shipping quote, formatted as currency.
+        Console.WriteLine($"Your estimated total for shipping this package is: ${quote:F2}");
+
+        Console.WriteLine("Thank you!");
+        Console.ReadLine(); // Keep console open after displaying the quote
+    }
+}
